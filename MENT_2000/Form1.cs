@@ -20,5 +20,10 @@ namespace MENT_2000
         {
 
         }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.Text = e.X + " " + e.Y; 
+        }
     }
 }
