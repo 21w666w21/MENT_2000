@@ -26,4 +26,16 @@ namespace MENT_2000
             this.Text = e.X + " " + e.Y; 
         }
     }
+
+    public class Cross
+    {
+        int x,y;
+
+        public Cross(int X, int Y)
+        {
+            this.x = X;
+            this.y = Y;
+        }
+    }
+    
 }
