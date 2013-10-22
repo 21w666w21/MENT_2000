@@ -12,6 +12,7 @@ namespace MENT_2000
     public partial class Form1 : Form
     {
         List<Cross> Points = new List<Cross>();
+        bool klik = true;
 
 
         public Form1()
@@ -26,7 +27,22 @@ namespace MENT_2000
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Text = Convert.ToString(e.X) + " " + Convert.ToString(e.Y);
+            if (radioButton1.Checked)
+            {
+                this.Text = Convert.ToString(e.X) + " " + Convert.ToString(e.Y);
+            }
+            else if (radioButton2.Checked)
+            {
+                if (klik)
+                {
+                    this.Text = Convert.ToString(e.X) + " " + Convert.ToString(e.Y) + " четный";
+                }
+                else
+                {
+                    this.Text = Convert.ToString(e.X) + " " + Convert.ToString(e.Y) + " нечетный";
+                }
+                klik = !klik;
+            }
             Points.Add(new Cross(e.X, e.Y));
             Invalidate();
         }
@@ -37,6 +53,11 @@ namespace MENT_2000
             {
                 count.ReDraw(e.Graphics);
             }
+        }
+
+        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            klik = true;
         }
     }
 
