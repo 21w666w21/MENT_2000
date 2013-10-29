@@ -11,8 +11,7 @@ namespace MENT_2000
 {
     public partial class Form1 : Form
     {
-       // List<Cross> Points = new List<Cross>();
-        List<Line> Points = new List<Line>();
+        List<Shape> Shapes = new List<Shape>();
         bool klik = true;
         Point p1, p2;
 
@@ -32,8 +31,7 @@ namespace MENT_2000
             if (radioButton1.Checked)
             {
                 this.Text = Convert.ToString(e.X) + " " + Convert.ToString(e.Y);
-                //Points.Add(new Cross(e.Location));
-
+                Shapes.Add(new Cross(e.Location));
             }
             else if (radioButton2.Checked)
             {
@@ -46,7 +44,7 @@ namespace MENT_2000
                 {
                     this.Text = Convert.ToString(e.X) + " " + Convert.ToString(e.Y) + " второй";
                     p2 = e.Location;
-                    Points.Add(new Line(p1, p2));
+                    Shapes.Add(new Line(p1, p2));
                 }
                 klik = !klik;
             }
@@ -55,7 +53,7 @@ namespace MENT_2000
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            foreach (Line count in this.Points)
+            foreach (Shape count in this.Shapes)
             {
                 count.ReDraw(e.Graphics);
             }
@@ -66,9 +64,12 @@ namespace MENT_2000
             klik = true;
         }
     }
+    public abstract class Shape
+    {
+        public abstract void ReDraw(Graphics g);
+    }
 
-
-    public class Cross
+    public class Cross : Shape
     {
         Point a;
 
@@ -79,13 +80,13 @@ namespace MENT_2000
             this.a = a;
         }
 
-        public void ReDraw(Graphics g)
+        public override void ReDraw(Graphics g)
         {
             g.DrawLine(p, a.X - 2, a.Y - 2, a.X + 2, a.Y + 2);
             g.DrawLine(p, a.X - 2, a.Y + 2, a.X + 2, a.Y - 2);
         }
     }
-    public class Line
+    public class Line : Shape
     {
         Point s, f;
 
@@ -97,7 +98,7 @@ namespace MENT_2000
             this.f = f;
         }
 
-        public void ReDraw(Graphics g)
+        public override void ReDraw(Graphics g)
         {
             g.DrawLine(w, s, f);
         }
