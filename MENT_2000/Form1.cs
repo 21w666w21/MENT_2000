@@ -43,7 +43,7 @@ namespace MENT_2000
                 }
                 klik = !klik;
             }
-            Points.Add(new Cross(e.X, e.Y));
+            Points.Add(new Cross(e.Location));
             Invalidate();
         }
 
@@ -64,20 +64,19 @@ namespace MENT_2000
 
     public class Cross
     {
-        int x, y;
+        Point a;
 
         Pen p = new Pen(Color.Black);
 
-        public Cross(int x, int y)
+        public Cross(Point a)
         {
-            this.x = x;
-            this.y = y;
+            this.a = a;
         }
 
-        public void ReDraw(Graphics a)
+        public void ReDraw(Graphics g)
         {
-            a.DrawLine(p, this.x - 2, this.y - 2, this.x + 2, this.y + 2);
-            a.DrawLine(p, this.x - 2, this.y + 2, this.x + 2, this.y - 2);
+            g.DrawLine(p, a.X - 2, a.Y - 2, a.X + 2, a.Y + 2);
+            g.DrawLine(p, a.X - 2, a.Y + 2, a.X + 2, a.Y - 2);
         }
     }
     
