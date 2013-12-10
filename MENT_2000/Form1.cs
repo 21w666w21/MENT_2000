@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MENT_2000
 {
@@ -63,10 +64,21 @@ namespace MENT_2000
         {
             klik = true;
         }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            StreamWriter sw = new StreamWriter("Save.txt");
+            foreach (Shape count in this.Shapes)
+            {
+                count.SaveTo(sw);
+            }
+            sw.Close();
+        }
     }
     public abstract class Shape
     {
         public abstract void ReDraw(Graphics g);
+        public abstract void SaveTo(StreamWriter sw);
     }
 
     public class Cross : Shape
@@ -84,6 +96,12 @@ namespace MENT_2000
         {
             g.DrawLine(p, a.X - 2, a.Y - 2, a.X + 2, a.Y + 2);
             g.DrawLine(p, a.X - 2, a.Y + 2, a.X + 2, a.Y - 2);
+
+        }
+        public override void SaveTo(StreamWriter sw)
+        {
+            sw.WriteLine("cross");
+            sw.WriteLine(Convert.ToString(a.X) + " " + Convert.ToString(a.Y));
         }
     }
     public class Line : Shape
@@ -101,6 +119,13 @@ namespace MENT_2000
         public override void ReDraw(Graphics g)
         {
             g.DrawLine(w, s, f);
+        }
+
+        public override void SaveTo(StreamWriter sw)
+        {
+            sw.WriteLine("line");
+            sw.WriteLine(Convert.ToString(s.X) + " " + Convert.ToString(f.Y));
+            sw.WriteLine(Convert.ToString(s.X) + " " + Convert.ToString(f.Y));
         }
     }
     
