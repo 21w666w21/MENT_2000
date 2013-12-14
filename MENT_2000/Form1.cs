@@ -74,6 +74,28 @@ namespace MENT_2000
             }
             sw.Close();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string textLine ;
+            StreamReader sr = new StreamReader("Save.txt");
+            textLine = sr.ReadLine();
+            while (textLine != null) 
+            {
+                
+                if (textLine == "cross")
+                {
+                    Shapes.Add(new Cross(sr));
+                }
+                 if (textLine == "line")
+                {
+                    Shapes.Add(new Line(sr));
+                }
+                textLine = sr.ReadLine();
+            }
+            sr.Close();
+            Invalidate();
+        }
     }
     public abstract class Shape
     {
@@ -91,6 +113,15 @@ namespace MENT_2000
         {
             this.a = a;
         }
+
+        public Cross(StreamReader sr)
+        {
+            string textline = sr.ReadLine();
+            string[] ln = textline.Split(' ');
+            a.X = int.Parse(ln[0]);
+            a.Y = int.Parse(ln[1]);
+        }
+
 
         public override void ReDraw(Graphics g)
         {
@@ -116,6 +147,19 @@ namespace MENT_2000
             this.f = f;
         }
 
+        public Line(StreamReader sr)
+        {
+            string textline = sr.ReadLine();
+            string[] ln = textline.Split(' ');
+            s.X = int.Parse(ln[0]);
+            s.Y = int.Parse(ln[1]);
+
+            textline = sr.ReadLine();
+            ln = textline.Split(' ');
+            f.X = int.Parse(ln[0]);
+            f.Y = int.Parse(ln[1]);
+        }
+
         public override void ReDraw(Graphics g)
         {
             g.DrawLine(w, s, f);
@@ -124,8 +168,8 @@ namespace MENT_2000
         public override void SaveTo(StreamWriter sw)
         {
             sw.WriteLine("line");
-            sw.WriteLine(Convert.ToString(s.X) + " " + Convert.ToString(f.Y));
-            sw.WriteLine(Convert.ToString(s.X) + " " + Convert.ToString(f.Y));
+            sw.WriteLine(Convert.ToString(s.X) + " " + Convert.ToString(s.Y));
+            sw.WriteLine(Convert.ToString(f.X) + " " + Convert.ToString(f.Y));
         }
     }
     
