@@ -77,8 +77,10 @@ namespace MENT_2000
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             string textLine ;
             StreamReader sr = new StreamReader("Save.txt");
+            Shapes.Clear();
             textLine = sr.ReadLine();
             while (textLine != null) 
             {
