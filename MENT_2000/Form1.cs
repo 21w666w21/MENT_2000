@@ -15,6 +15,7 @@ namespace MENT_2000
         List<Shape> Shapes = new List<Shape>();
         bool klik = true;
         Point p1, p2;
+        string filename = null;
 
 
         public Form1()
@@ -67,36 +68,46 @@ namespace MENT_2000
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            StreamWriter sw = new StreamWriter("Save.txt");
-            foreach (Shape count in this.Shapes)
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                count.SaveTo(sw);
+                filename = saveFileDialog1.FileName;
+
+                StreamWriter sw = new StreamWriter(filename);
+                foreach (Shape count in this.Shapes)
+                {
+                    count.SaveTo(sw);
+                }
+                sw.Close();
             }
-            sw.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            string textLine ;
-            StreamReader sr = new StreamReader("Save.txt");
-            Shapes.Clear();
-            textLine = sr.ReadLine();
-            while (textLine != null) 
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                
-                if (textLine == "cross")
-                {
-                    Shapes.Add(new Cross(sr));
-                }
-                 if (textLine == "line")
-                {
-                    Shapes.Add(new Line(sr));
-                }
+                filename = openFileDialog1.FileName;
+
+
+                string textLine;
+                StreamReader sr = new StreamReader(filename);
+                Shapes.Clear();
                 textLine = sr.ReadLine();
+                while (textLine != null)
+                {
+
+                    if (textLine == "cross")
+                    {
+                        Shapes.Add(new Cross(sr));
+                    }
+                    if (textLine == "line")
+                    {
+                        Shapes.Add(new Line(sr));
+                    }
+                    textLine = sr.ReadLine();
+                }
+                sr.Close();
+                Invalidate();
             }
-            sr.Close();
-            Invalidate();
         }
     }
     public abstract class Shape
